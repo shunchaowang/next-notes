@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../prisma/lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next"
+import { prisma } from "../../../../prisma/lib/prisma"
 
 export default async function handler(
     req: NextApiRequest,
@@ -8,7 +8,7 @@ export default async function handler(
     // we want to handle both delete and update here
     // get the param passed
 
-    const id = req.query.id;
+    const id = req.query.id
 
     // get the node
     // then perform the operation
@@ -17,13 +17,13 @@ export default async function handler(
         case "DELETE":
             const note = await prisma.note.delete({
                 where: { id: Number(id) },
-            });
-            res.json(note);
-            break;
+            })
+            res.json(note)
+            break
         case "PUT":
-            break;
+            break
         default:
-            res.status(200).json({ message: "Method not allowed" });
-            break;
+            res.status(200).json({ message: "Method not allowed" })
+            break
     }
 }

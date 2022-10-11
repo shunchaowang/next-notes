@@ -1,8 +1,8 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { useRouter } from "next/router";
-import { title } from "process";
-import { useState } from "react";
-import { prisma } from "../../prisma/lib/prisma";
+import type { GetServerSideProps, NextPage } from "next"
+import { useRouter } from "next/router"
+import { title } from "process"
+import { useState } from "react"
+import { prisma } from "../../../prisma/lib/prisma"
 
 const style = {
     head: `text-center font-bold text-2x1 mt-4`,
@@ -11,20 +11,20 @@ const style = {
     textarea: `border-2 rounded border-gray-600 p-1`,
     button: `bg-blue-500 text-white rounded p-1`,
     table: `w-auto min-w-[25%] max-w-min mt-20 mx-auto space-y-6 flex flex-col items-stretch`,
-};
+}
 
 interface Notes {
     notes: {
-        id: string;
-        title: string;
-        content: string;
-    }[];
+        id: string
+        title: string
+        content: string
+    }[]
 }
 
 interface FormData {
-    title: string;
-    content: string;
-    id: string;
+    title: string
+    content: string
+    id: string
 }
 
 const Home: NextPage<Notes> = ({ notes }: Notes) => {
@@ -32,13 +32,13 @@ const Home: NextPage<Notes> = ({ notes }: Notes) => {
         title: "",
         content: "",
         id: "",
-    });
+    })
 
-    const router = useRouter();
+    const router = useRouter()
 
     const refreshData = () => {
-        router.replace(router.asPath);
-    };
+        router.replace(router.asPath)
+    }
 
     const createNote = async (data: FormData) => {
         try {
@@ -51,15 +51,15 @@ const Home: NextPage<Notes> = ({ notes }: Notes) => {
             }).then(() => {
                 // fake updating now, delete the old one
                 if (data.id) {
-                    deleteNote(data.id);
+                    deleteNote(data.id)
                 }
-                refreshData();
-                setForm({ title: "", content: "", id: "" });
-            });
+                refreshData()
+                setForm({ title: "", content: "", id: "" })
+            })
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    };
+    }
 
     const deleteNote = async (id: string) => {
         try {
@@ -69,20 +69,20 @@ const Home: NextPage<Notes> = ({ notes }: Notes) => {
                 },
                 method: "DELETE",
             }).then(() => {
-                refreshData();
-            });
+                refreshData()
+            })
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    };
+    }
 
     return (
         <div>
             <h1 className={style.head}>Notes</h1>
             <form
                 onSubmit={(e) => {
-                    e.preventDefault();
-                    createNote(form);
+                    e.preventDefault()
+                    createNote(form)
                 }}
                 className={style.form}
             >
@@ -146,10 +146,10 @@ const Home: NextPage<Notes> = ({ notes }: Notes) => {
                 </ul>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Home;
+export default Home
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const notes = await prisma?.note.findMany({
@@ -158,9 +158,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
             id: true,
             content: true,
         },
-    });
+    })
 
     return {
         props: { notes },
-    };
-};
+    }
+}
