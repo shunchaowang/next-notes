@@ -14,6 +14,11 @@ const Home = () => {
                         <a>Person</a>
                     </Link>
                 </li>
+                <li>
+                    <Link href="/persons/faker">
+                        <a>Fake Person</a>
+                    </Link>
+                </li>
             </ul>
         </div>
     )

@@ -1,4 +1,6 @@
-import React, { HTMLProps } from "react"
+import React, { HTMLAttributes, HTMLProps } from "react"
+import ReactDOM from "react-dom/client"
+
 import {
     Column,
     Table,
@@ -11,6 +13,7 @@ import {
     ColumnDef,
     flexRender,
 } from "@tanstack/react-table"
+import { makeData, Person } from "./makeData"
 
 function App() {
     const rerender = React.useReducer(() => ({}), {})[1]
@@ -354,3 +357,5 @@ function IndeterminateCheckbox({
         />
     )
 }
+
+export default App
